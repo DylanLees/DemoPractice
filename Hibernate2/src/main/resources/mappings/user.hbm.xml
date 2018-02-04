@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 编写映射文件 -->
+<hibernate-mapping>
+	<!-- 完全限定名（包含包名） -->
+	<!-- 完成实体类和数据库表之间的映射关系,class中的name为完全限定名 -->
+	<class name="com.woniuxy.hibernate.test.User" table="users">
+		<!-- 映射主键的type：java中的数据类型 -->
+		<id name="id" column="id" type="int">
+			<!--主键生成策略 ,自增 -->
+			<generator class="increment" />
+		</id>
+		<!-- 设置普通列的列名和属性 -->
+		<property name="name" column="name" length="50" type="string" />
+		<property name="sex" column="sex" length="50" type="string" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+		   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+		   http://www.springframework.org/schema/context  
+		   http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<!-- 通过实体类的全限定名获取实例化Bean，lazy-init（默认值为false）表示在需要使用的时候，再进行实体化该Bean对象 -->
+	<bean id="userAction" class="com.woniuxy.spring.beans.UserAction"
+		lazy-init="true"></bean>
+	<!-- id:唯一标识 type:参数类型，全限定名 class：全限定名 name：参数名称 index：参数索引 ref:引用的参数 lazy-init:延迟初始化 
+		value：字面值 -->
+	<bean id="userAction1" class="com.woniuxy.spring.beans.UserAction"
+		lazy-init="true">
+		<constructor-arg value="张三" type="java.lang.String"></constructor-arg>
+	</bean>
+	<bean id="userAction2" class="com.woniuxy.spring.beans.UserAction"
+		lazy-init="true">
+		<constructor-arg value="10" type="int"></constructor-arg>
+	</bean>
+	<!-- 调用实例化方法，调用destroy方法 -->
+	<bean id="userAction3" class="com.woniuxy.spring.beans.UserAction"
+		destroy-method="destroy" depends-on="userAction4"></bean>
+	<!-- 调用depends-on：表示id为userAction4的Bean对象的实例化依赖于id为userAction5的Bean对象实例化完成才能进行，实例化完成之候调用init-method里面的方法初始化已经实例化的Bean对象 -->
+	<bean id="userAction4" class="com.woniuxy.spring.beans.UserAction"
+		init-method="init" depends-on="userAction5"></bean>
+	<!--调用初始化对象的方法 -->
+	<bean id="userAction5" class="com.woniuxy.spring.beans.UserAction"
+		init-method="init"></bean>
+	<bean id="userAction6" class="com.woniuxy.spring.beans.UserAction"
+		factory-bean="actionFactory" factory-method="getInstance">
+		<!-- 构造器注入 -->
+		<constructor-arg value="李四"></constructor-arg>
+	</bean>
+	<bean id="actionFactory" class="com.woniuxy.spring.beans.ActionFactory"></bean>
+</beans>
+

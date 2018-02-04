@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="0" key="org.eclipse.egit.ui.internal.clone.GitSelectWizardPageWizardSel"/>
+	<list key="RepositorySelectionPage.UsedUris">
+		<item value="http://192.168.2.22:3000/linzhongjun/saiku3.15.git"/>
+		<item value="libanghai@192.168.2.22:linzhongjun/saiku3.15.git"/>
+		<item value="root@192.168.2.22:linzhongjun/saiku3.15.git"/>
+		<item value="git@gitee.com:DiFangLiangCangXiaoZu/DiFangLiangCangJianSheGuanLiXiTong.git"/>
+	</list>
+	<section name="GitImportWizard">
+		<item value="true" key="GitProjectsImportPage.STORE_NESTED_PROJECTS"/>
+	</section>
+</section>

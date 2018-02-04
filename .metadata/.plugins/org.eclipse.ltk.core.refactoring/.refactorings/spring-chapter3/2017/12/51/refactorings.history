@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;LogConfig.java&apos; to &apos;com.woniuxy.spring.advice.Logadvice.java&apos;&#x0D;&#x0A;- Original project: &apos;spring-chapter3&apos;&#x0D;&#x0A;- Destination element: &apos;com.woniuxy.spring.advice.Logadvice.java&apos;&#x0D;&#x0A;- Original element: &apos;com.woniuxy.spring.application.LogConfig.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src\/main\/java&lt;com.woniuxy.spring.advice{Logadvice.java" element1="/src\/main\/java&lt;com.woniuxy.spring.application{LogConfig.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1513933670980" units="1" version="1.0"/>
+</session>

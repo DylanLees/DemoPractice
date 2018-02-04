@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+		   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+		   http://www.springframework.org/schema/context  
+		   http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		   http://www.springframework.org/schema/aop 
+		   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		   http://www.springframework.org/schema/tx 
+		   http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	<context:component-scan base-package="com.woniuxy.spring" />
+	<context:property-placeholder location="classpath:application.properties" />
+	<!-- 配置数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+
+	</bean>
+	<!-- 配置会话工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 配置数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置mapper -->
+		<property name="mapperLocations" value="classpath*:mappings/*.xml" />
+		<!-- 别名 -->
+		<property name="typeAliasesPackage" value="com.woniuxy.spring.entity"></property>
+	</bean>
+	<!-- 配置mapper扫描器 -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 注入会话工厂 -->
+		<property name="SqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<!-- 设置mapper包 -->
+		<property name="basePackage" value="com.woniuxy.spring.mapper"></property>
+	</bean>
+	<!-- <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource"></property> </bean> <tx:annotation-driven 
+		transaction-manager="txManager"/> -->
+</beans>
+

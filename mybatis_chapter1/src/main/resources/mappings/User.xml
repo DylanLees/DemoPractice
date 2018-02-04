@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+	<!-- 插入用户数据的sql语句 -->
+	<insert id="insert" parameterType="user">
+		<!-- 绑定id值 -->
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
+			select
+			last_insert_id()
+		</selectKey>
+		insert into t_user
+		(user_name,cnname,sex,mobile,email,note)
+		values(#{user_name},#{cnname},#{sex},#{mobile},#{email},#{note})
+	</insert>
+	<!-- 根据用户id查询用户信息 -->
+	<select id="findUserInfoById" parameterType="int" resultType="user">
+		select * from t_user where id=${value}
+	</select>
+	<!-- 根据用户名查询用户信息 -->
+	<select id="findUserInfoByName" parameterType="string"
+		resultType="user">
+		select * from t_user where cnname like '${value}'
+	</select>
+	<!-- 根据用户id删除用户信息 -->
+	<delete id="deleteInfoById" parameterType="int">
+		delete from t_user
+		where id=#{value}
+	</delete>
+	<!-- 更新用户信息根据用户id -->
+	<update id="updateInfoByid" parameterType="user">
+
+		update t_user set
+		user_name=#{user_name} where id=#{id}
+
+	</update>
+	<!-- 生成动态SQL语句 -->
+	<select id="findInfoByName" parameterType="user" resultType="user">
+		select * from t_user
+		<where>
+			<if test="cnname!=null||cnname!=''">
+				cnname=#{value},
+			</if>
+			<if test="email!=null||email!=''">
+				or email=#{value},
+			</if>
+
+		</where>
+	</select>
+	<!-- 动态生成插入数据的SQL语句 -->
+	<insert id="batchInsert" parameterType="list">
+		insert into t_user ()
+	</insert>
+</mapper>

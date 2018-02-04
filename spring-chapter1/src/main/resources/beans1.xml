@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+		   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+		   http://www.springframework.org/schema/context  
+		   http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<!-- 设置scope（作用域）="prototype"，则每次从spring容器中获取的都是一个新的实例，否则默认是从缓存中获取 -->
+	<bean id="userAction1" class="com.woniuxy.spring.beans.UserAction1"
+		scope="prototype" init-method="init">
+		<!-- 构造器注入 -->
+		<constructor-arg ref="userDAO"></constructor-arg>
+		<!-- set方法注入 ,name是userDAO里面的setXXX(XXX xxx)方法里面的set后的XXX,首字母改为小写 -->
+		<!-- <property name="userDAO" ref="userDAO"></property> -->
+	</bean>
+	<bean id="userDAO" class="com.woniuxy.spring.beans.UserDAO">
+		<property name="list">
+			<list>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+				<value>4</value>
+			</list>
+		</property>
+		<property name="set">
+			<list>
+				<value>11</value>
+				<value>12</value>
+				<value>13</value>
+				<value>14</value>
+			</list>
+
+		</property>
+	</bean>
+
+
+</beans>

@@ -1,0 +1,13 @@
+1513149204876	Move files
+1513149212534	Delete element
+1513173469575	Move file
+1513173480009	Move file
+1513173485403	Delete element
+1513216966607	Delete elements
+1513217880878	Move folder
+1513217883724	Move file
+1513220778492	Delete element
+1513223949385	Convert local variable 'entityManagerFactory' to field
+1513224059858	Convert local variable 'entityManager' to field
+1513240794257	Encapsulate field 'count'
+1513330599045	Infer generic type arguments

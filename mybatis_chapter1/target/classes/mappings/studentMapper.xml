@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.mybatis.entity.StudentMapper">
+	<resultMap type="student" id="studentInfo">
+		<!-- 映射学生信息 -->
+		<id property="id" column="id" />
+		<result property="cname" column="cname" />
+		<result property="sex" column="sex" />
+		<result property="note" column="note" />
+	</resultMap>
+	<resultMap type="student" id="studentIdCardInfo" extends="studentInfo">
+		<!-- 关联学生表身份信息 -->
+		<association property="idCard" javaType="idCard">
+			<id property="id" column="tid" />
+			<result property="student_id" column="student_id" />
+			<result property="natives" column="native" />
+			<result property="issue_date" column="issue_date" />
+			<result property="end_date" column="end_date" />
+			<result property="tnote" column="tnote" />
+		</association>
+	</resultMap>
+	<!-- 关联学生健康信息 -->
+	<resultMap type="student" id="healthInfo" extends="studentInfo">
+		<collection property="health" ofType="health">
+			<id property="id" column="tid" />
+			<result property="student_id" column="student_id" />
+			<result property="check_date" column="check_date" />
+			<result property="heart" column="heart" />
+			<result property="liver" column="liver" />
+			<result property="spleen" column="spleen" />
+			<result property="lung" column="lung" />
+			<result property="kidney" column="kidney" />
+			<result property="prostate" column="prostate" />
+			<result property="note" column="tnote" />
+		</collection>
+	</resultMap>
+
+	<!-- 根据用户id查询学生身份信息 -->
+	<select id="findStudentInfoWithIdCardById" parameterType="int"
+		resultMap="studentInfo">
+		SELECT ts.*,tss.id tid,native,issue_date,end_date,tss.note
+		tnote FROM
+		t_student ts INNER JOIN t_student_selfcard tss ON
+		ts.id=tss.student_id
+		WHERE ts.id=#{value};
+	</select>
+	<!-- 根据用户id查询学生健康信息 -->
+	<select id="findStudentInfoWithHealthById" parameterType="int"
+		resultMap="healthInfo">
+		SELECT
+		ts.*, tsh.id tid,
+		check_date,
+		heart,
+		liver,
+		spleen,
+		lung,
+		kidney,
+		prostate,
+		tsh.note as tnote
+		FROM
+		t_student ts
+		INNER JOIN
+		t_student_health_male tsh ON ts.id = tsh.student_id
+		WHERE
+		ts.id =
+		#{value};
+	</select>
+	<resultMap type="student" id="lazyInfo" extends="studentInfo">
+		<collection property="health" ofType="health" select="findHealthByid"
+			column="id"></collection>
+	</resultMap>
+	<select id="findHealthByid" parameterType="int" resultType="health">
+		SELECT * FROM t_student_health_male WHERE student_id=#{value}
+	</select>
+	<select id="findStudentInfoWithLazyLoadById" parameterType="int"
+		resultMap="lazyInfo">
+		select * from t_student where id=#{value}
+	</select>
+	<select id="findStudentInfoById" parameterType="int" resultType="student">
+		SELECT * FROM t_student WHERE id=#{value}
+	</select>
+</mapper>

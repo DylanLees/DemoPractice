@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<!-- 完成实体类和数据库表之间的映射关系 -->
+<class  name="com.woniuxy.hibernate.entity.User table="users">
+<!-- 映射主键的类型type:java中的数据类型 -->
+     <id name="id" column="id" type="int" >
+     <!-- 主键生成策略，自增 -->
+         <generator class="identity" />
+     </id>
+    <!-- 映射非主键 -->
+     <property name="name"  type="string" column="name" length="30" />
+     <property name="sex"  	type="string" column="sex" length="10" />
+   
+</class>
+</hibernate-mapping>

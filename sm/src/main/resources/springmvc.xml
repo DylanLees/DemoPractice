@@ -1,0 +1,62 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+	<!-- 指定扫描的包 -->
+	<context:component-scan base-package="com.woniuxy.spring.controller"></context:component-scan>
+	<mvc:annotation-driven conversion-service="conversionService"
+		validator="validator" />
+	<!-- 注册类型转换器 -->
+	<bean id="conversionService"
+
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 注册自定义的类型转换器 -->
+		<property name="formatters">
+			<set>
+				<bean class="com.woniuxy.spring.controller.converter.MyDateFormatter"></bean>
+			</set>
+		</property>
+	</bean>
+	<!-- 配置数据校验器 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<!-- 指定校验器 -->
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator">
+		</property>
+		<!-- 指定错误提示文件 -->
+		<property name="validationMessageSource">
+			<bean
+				class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+				<property name="basenames">
+					<value>classpath:validation</value>
+				</property>
+			</bean>
+		</property>
+
+	</bean>
+	<!-- 处理静态资源映射的,该资源不会通过前端控制器,location表示静态资源在服务器中的位置，**表示匹配多级目录 -->
+	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+	<!-- 配置所有拦截器 -->
+	<mvc:interceptors>
+		<!-- 配置单个拦截器 -->
+		<mvc:interceptor>
+			<!-- 需要过滤的url地址格式 -->
+			<mvc:mapping path="/UserController/**" />
+			<bean class="com.woniuxy.spring.interceptor.RightIntercepter"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 配置视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<!-- 后缀 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+</beans>
